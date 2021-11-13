@@ -10,11 +10,12 @@ const port = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 
-// const usersRouter = require('./routes/user_routes');
-// const checkinRouter = require('./routes/checkin_route');
+// const dataRouter = require('.route/data_route');
+const dataRouter = require('./route/data_route');
 
-app.use('/api', usersRouter);
-// app.use('/api/checkin',checkinRouter);
+
+app.use('/api', dataRouter);
+
 
 
 const uri = process.env.ATLAS_URI;
