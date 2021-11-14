@@ -1,6 +1,6 @@
 const router = require('express').Router();
 let Data = require('../model/data.model');
-
+const fetch = require('node-fetch');
 router.route('/').get((req, res) => { // Get All Data
     Data.find()
       .then(datas => res.json(datas))
@@ -65,5 +65,17 @@ router.route('/').delete((req, res) => { // Get All Data
       res.end("Success!");
     }
   })
+});
+
+
+router.route('/datamicroservice').get((req,res) =>{
+  fetch('http://indexes.nikkei.co.jp/en/nkave/get_real_data?idx=nk225', 
+  {
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(response => response.json())
+  .then(json => { 
+      res.json(json);
+  });
 });
 module.exports = router;

@@ -6,8 +6,17 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT;
+const corsOpts = {
+  origin: '*',
+  credentials: true,
+  methods: ['GET','POST','HEAD','PUT','PATCH','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+  exposedHeaders: ['Content-Type']
+};
 
-app.use(cors());
+
+
+app.use(cors(corsOpts));
 app.use(express.json());
 
 // const dataRouter = require('.route/data_route');

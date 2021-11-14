@@ -2,7 +2,7 @@
   "name": "Nikei225",
   "version": "1.0.0",
   "description": "Nikei225",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,6 +24,7 @@
     "express": "^4.17.1",
     "loader": "^2.1.1",
     "mongoose": "^6.0.12",
+    "node-fetch": "^2.0.0",
     "nodemon": "^2.0.15"
   }
 }

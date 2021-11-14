@@ -7,47 +7,100 @@ import { authenticate, isAuth ,setCookie ,removeCookie} from '../helpers/auth.js
 const Login = ({history}) => {
     // ----------- event ปุ่ม Sign in----------------------//
     
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({
+      price_upper : '',
+      price_lower : '',
+      data_date : '',
+      data_time : '',
+      open_price : '',
+      opentime : ''
+    });
+    const [prv_data, setPrvData] = useState({
+      price_upper : '',
+      price_lower : '',
+      data_date : '',
+      data_time : '',
+      open_price : '',
+      opentime : ''
+    });
 
-    const send_req = async() => {
-      const result = await axios.get(`http://indexes.nikkei.co.jp/en/nkave/get_real_data?idx=nk225`, {
-        withCredentials: true,         
-        crossorigin: true,
-        headers : {
-          'Content-Type':  'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, DELETE, HEAD, OPTIONS',
-          'Access-Control-Max-Age' : 86400    
-        },
-        mode: 'cors',
-        credentials: 'include'
-      });
-
-      setFormData(result.data)
+    const [status , setStatus] = useState("START");
+    const [date , setDate] = useState("NULL");
+    const {price_upper, price_lower,data_date,data_time,open_price,opentime} = formData;
+    const {prv_data_time} = prv_data;
+    const fetchandupdate = async() => {
+      //-----------------Fetch---------------------------//
+      const result = await axios.get(`${process.env.REACT_APP_API_URL}api/datamicroservice`)
+      let prv = (await axios.get(`${process.env.REACT_APP_API_URL}api`)).data.pop()
+      let data = result.data
+      setFormData({
+        price_upper :  String(data.price).split(".")[1],   //String(data.price).split(".")[0].at(-1)+ 3ตัวค่อยเอามาบวก
+        price_lower : String(data.diff).split("(")[0].split(".")[1].trim(),
+        data_date : String(data.datedtime_nkave).split(" ")[0],
+        data_time : String(data.datedtime_nkave).split(" ")[1],
+        open_price : data.open_price,
+        opentime : data.opentime
+      })
+      
+      setPrvData({
+        price_upper :  prv.price_upper,
+        price_lower : prv.price_lower,
+        data_date : prv.data_date,
+        data_time : prv.data_time,
+        open_price : prv.open_price,
+        opentime : prv.opentime
+      })
       console.log(formData)
+      if(formData.data_time !== '' && prv_data.data_time !== '' && formData.data_time.localeCompare(prv_data.data_time) !== 0 && status.localeCompare("New Data") !== 0 ) {
+        setStatus("New Data")
+        console.log("New Data")
+      }
+
+      if(status === "New Data"){
+
+          await axios.post(`${process.env.REACT_APP_API_URL}api`,{
+            price_upper,
+            price_lower,
+            data_date,
+            data_time,
+            open_price,
+            opentime
+          })
+          .then(() =>{
+            setStatus("Update! : "+ data_time)
+            setDate(data_date)
+            console.log("END")
+          })
+        
+      }
+      // if(price_upper != ''){
+      
     }
 
 
     useEffect(() =>{
-      send_req()
-    },[]);
+      const interval = setInterval(() => {
+        console.log("Start!")
+        fetchandupdate()
+        console.log("End!")
+      }, 5000);
+      return () => {
+        clearInterval(interval);
+      }
+    });
 
 
 
 
     
 
-    
-      const { price_upper, price_lower ,data_date,data_time,open_price,opentime} = formData;
-      const handleChange = text => e => {
-        setFormData({ ...formData, [text]: e.target.value });
-      };
-
-  // ----------- event ปุ่ม Sign in----------------------//
 
         return (
             <form>
                 <h3>สถานะ</h3>
+                <h2>{status}</h2>
+                <h2>Date : {date}</h2>
+
             </form>
             
         );
