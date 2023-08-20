@@ -1,0 +1,16 @@
+{
+  "price": "31,450.76",
+  "diff": "\u003c!--daily_changing--\u003e-175.24 (-0.55%)\u0026nbsp;\u0026nbsp;\u003cspan class=\"icon-arrow-dark-circle-right-down zoom-icon\" aria-hidden=\"true\"\u003e\u003c/span\u003e",
+  "diff_xs": "\u003c!--daily_changing--\u003e-175.24 (-0.55%)\u0026nbsp;\u003cspan class=\"icon-arrow-dark-circle-right-down zoom-icon\" aria-hidden=\"true\"\u003e\u003c/span\u003e",
+  "price_diff": "\u003c!--daily_changing--\u003e\u003cdiv class=\"current_sub_pos\"\u003e\u003cspan class=\"current_sub_price\"\u003e31,450.76\u0026nbsp;\u003c/span\u003e-175.24 (-0.55%)\u0026nbsp;\u0026nbsp;\u003cspan class=\"icon-arrow-dark-circle-right-down zoom-icon\" aria-hidden=\"true\"\u003e\u003c/span\u003e",
+  "datedtime": "Aug/18/2023(*Close)",
+  "datedtime_nkave": "Aug/18/2023 *Close",
+  "open_price": "31,321.26",
+  "opentime": "(09:00)",
+  "high_price": "31,644.89",
+  "hightime": "(11:13)",
+  "low_price": "31,275.25",
+  "lowtime": "(09:01)",
+  "divisor": "29.50866151",
+  "divisor_date": "(Aug/21/2023)"
+}
